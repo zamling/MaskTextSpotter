@@ -19,6 +19,7 @@ from torch import nn
 from maskrcnn_benchmark.layers import FrozenBatchNorm2d
 from maskrcnn_benchmark.layers import Conv2d
 
+#namedtuple : 工厂函数
 
 # ResNet stage specification
 StageSpec = namedtuple(
@@ -64,8 +65,11 @@ class ResNet(nn.Module):
         # self.cfg = cfg.clone()
 
         # Translate string names to implementations
+        # stem_module = class StemWithFixedBatchNorm(nn.Module):
         stem_module = _STEM_MODULES[cfg.MODEL.RESNETS.STEM_FUNC]
+        #上面声明的stage spec
         stage_specs = _STAGE_SPECS[cfg.MODEL.BACKBONE.CONV_BODY]
+        #class BottleneckWithFixedBatchNorm(nn.Module):有点像block 1x1 3x3 1x1
         transformation_module = _TRANSFORMATION_MODULES[cfg.MODEL.RESNETS.TRANS_FUNC]
 
         # Construct the stem module
@@ -95,6 +99,7 @@ class ResNet(nn.Module):
                 first_stride=int(stage_spec.index > 1) + 1,
             )
             in_channels = out_channels
+            #nn.Module 类也有 add_module 函数方法
             self.add_module(name, module)
             self.stages.append(name)
             self.return_features[name] = stage_spec.return_features
@@ -275,7 +280,7 @@ class StemWithFixedBatchNorm(nn.Module):
     def __init__(self, cfg):
         super(StemWithFixedBatchNorm, self).__init__()
 
-        out_channels = cfg.MODEL.RESNETS.STEM_OUT_CHANNELS
+        out_channels = cfg.MODEL.RESNETS.STEM_OUT_CHANNELS # 64
 
         self.conv1 = Conv2d(
             3, out_channels, kernel_size=7, stride=2, padding=3, bias=False
@@ -317,3 +322,7 @@ def register_stage_spec(stage_spec_name, stage_spec):
 def _register_generic(module_dict, module_name, module):
     assert module_name not in module_dict
     module_dict[module_name] = module
+
+if __name__ == "__main__":
+    for i in ResNet50FPNStagesTo5:
+        print(i)

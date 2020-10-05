@@ -94,7 +94,7 @@ _C.DATALOADER.ASPECT_RATIO_GROUPING = True
 # ---------------------------------------------------------------------------- #
 _C.MODEL.BACKBONE = CN()
 
-# The backbone conv body to use
+# The backbone conv body to useWIDTH_PER_GROUP
 # The string must match a function that is imported in modeling.model_builder
 # (e.g., 'FPN.add_fpn_ResNet101_conv5_body' to specify a ResNet-101-FPN
 # backbone)

@@ -1,3 +1,4 @@
+
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 from collections import OrderedDict
 
@@ -42,3 +43,10 @@ def build_backbone(cfg):
     if cfg.MODEL.BACKBONE.CONV_BODY.endswith("-FPN"):
         return build_resnet_fpn_backbone(cfg)
     return build_resnet_backbone(cfg)
+
+
+
+if __name__ == "__main__":
+    model = build_resnet_backbone(cfg)
+    for name,layer in model.named_modules():
+        print(name, layer)

@@ -71,6 +71,7 @@ def compute_on_dataset(model, data_loader, device):
 				)
 	return results_dict
 
+
 def get_tight_rect(points, start_x, start_y, image_height, image_width, scale):
     points = list(points)
     ps = sorted(points,key = lambda x:x[0])
@@ -132,7 +133,7 @@ def get_tight_rect(points, start_x, start_y, image_height, image_width, scale):
     return [px1, py1, px2, py2, px3, py3, px4, py4]
 
 def mask2polygon(mask, box, im_size, threshold=0.5, output_folder=None):
-	# mask 32*128
+    # mask 32*128
 	image_width, image_height = im_size[0], im_size[1]
 	box_h = box[3] - box[1]
 	box_w = box[2] - box[0]

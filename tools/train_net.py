@@ -25,7 +25,6 @@ from maskrcnn_benchmark.utils.imports import import_file
 from maskrcnn_benchmark.utils.logging import setup_logger, Logger
 from maskrcnn_benchmark.utils.miscellaneous import mkdir
 
-
 def train(cfg, local_rank, distributed):
     model = build_detection_model(cfg)
     device = torch.device(cfg.MODEL.DEVICE)
@@ -141,7 +140,7 @@ def main():
         torch.distributed.init_process_group(
             backend="nccl", init_method="env://"
         )
-
+#-------------------------------------------------------------
     cfg.merge_from_file(args.config_file)
     cfg.merge_from_list(args.opts)
     cfg.freeze()

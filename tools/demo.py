@@ -25,11 +25,12 @@ class TextDemo(object):
         self.model = build_detection_model(cfg)
         self.model.eval()
         self.device = torch.device(cfg.MODEL.DEVICE)
-        self.model.to(self.device)
+
         self.min_image_size = min_image_size
 
         checkpointer = DetectronCheckpointer(cfg, self.model)
         _ = checkpointer.load(cfg.MODEL.WEIGHT)
+        self.model.to(self.device)
 
         self.transforms = self.build_transform()
         self.cpu_device = torch.device("cpu")

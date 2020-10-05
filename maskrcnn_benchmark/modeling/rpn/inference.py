@@ -180,10 +180,12 @@ class RPNPostProcessor(torch.nn.Module):
 
 
 def make_rpn_postprocessor(config, rpn_box_coder, is_train):
+    #2000
     fpn_post_nms_top_n = config.MODEL.RPN.FPN_POST_NMS_TOP_N_TRAIN
     if not is_train:
+        #2000
         fpn_post_nms_top_n = config.MODEL.RPN.FPN_POST_NMS_TOP_N_TEST
-
+    #
     pre_nms_top_n = config.MODEL.RPN.PRE_NMS_TOP_N_TRAIN
     post_nms_top_n = config.MODEL.RPN.POST_NMS_TOP_N_TRAIN
     if not is_train:

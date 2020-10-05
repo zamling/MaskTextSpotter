@@ -96,6 +96,7 @@ class Checkpointer(object):
 
     def _load_model(self, checkpoint):
         load_state_dict(self.model, checkpoint.pop("model"))
+        print("model loads successfully")
 
 
 class DetectronCheckpointer(Checkpointer):
@@ -113,6 +114,25 @@ class DetectronCheckpointer(Checkpointer):
             model, optimizer, scheduler, save_dir, save_to_disk, logger
         )
         self.cfg = cfg.clone()
+
+    def load(self, f=None, resume=False):
+        if not f:
+            # no checkpoint could be found
+            self.logger.info("No checkpoint found. Initializing model from scratch")
+            return {}
+        self.logger.info("Loading checkpoint from {}".format(f))
+        checkpoint = self._load_file(f)
+        self._load_model(checkpoint)
+        if resume:
+            if "optimizer" in checkpoint and self.optimizer:
+                self.logger.info("Loading optimizer from {}".format(f))
+                self.optimizer.load_state_dict(checkpoint.pop("optimizer"))
+            if "scheduler" in checkpoint and self.scheduler:
+                self.logger.info("Loading scheduler from {}".format(f))
+                self.scheduler.load_state_dict(checkpoint.pop("scheduler"))
+
+        # return any further checkpoint data
+        return checkpoint
 
     def _load_file(self, f):
         # catalog lookup

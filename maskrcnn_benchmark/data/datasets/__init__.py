@@ -5,4 +5,6 @@ from .icdar import IcdarDataset
 from .synthtext import SynthtextDataset
 from .scut import ScutDataset
 from .total_text import TotaltextDataset
+from .MyDataset import MyDataset_train
+from .MyDataset import MyDataset_test
 __all__ = ["COCODataset", "ConcatDataset","IcdarDataset","SynthtextDataset","MixDataset","ScutDataset","TotaltextDataset"]

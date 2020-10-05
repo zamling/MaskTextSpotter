@@ -15,7 +15,7 @@ class FPN(nn.Module):
         """
         Arguments:
             in_channels_list (list[int]): number of channels for each feature map that
-                will be fed
+                will be fed  #should be [256,512,1024,2048] for top 5
             out_channels (int): number of channels of the FPN representation
             top_blocks (nn.Module or None): if provided, an extra operation will
                 be performed on the output of the last (smallest resolution)

@@ -124,6 +124,25 @@ class DatasetCatalog(object):
                 args=args,
                 factory="SynthtextDataset",
             )
+        elif "my_dataset_train" in name:
+            json_dir = '/data1/zem/Resnet.CRNN/data/SynthText/my_gt.json'
+            args=dict(
+                json_dir=json_dir
+            )
+            return dict(
+                args=args,
+                factory="MyDataset_train"
+            )
+        elif "my_dataset_test" in name:
+            json_dir = '/data1/zem/Resnet.CRNN/data/SynthText/my_gt.json'
+            args=dict(
+                json_dir=json_dir
+            )
+            return dict(
+                args=args,
+                factory="MyDataset_test"
+            )
+
         elif "total_text" in name:
             data_dir = DatasetCatalog.DATA_DIR
             attrs = DatasetCatalog.DATASETS[name]
